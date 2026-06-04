@@ -1,2 +1,2 @@
 # NotePal
-A simple Note App but with Intelligence and Context Awareness
+A simple Note App with Intelligence and Context Awareness
