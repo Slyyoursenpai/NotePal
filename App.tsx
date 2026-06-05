@@ -2,11 +2,7 @@ import { useState, useEffect } from "react"
 import NotesPage from "./pages/NotesPage"
 import AskAIPage from "./pages/AskAIPage"
 import BottomNav from "./components/BottomNav"
-
-type Note = {   /// temporary note type check
-  title: string
-  content: string
-}
+import type { Note } from "./types/Note"
 
 export default function App() {
   const [page, setPage] = useState("notes")
@@ -14,17 +10,18 @@ export default function App() {
   const [notes, setNotes] = useState<Note[]>(() => {
     const saved = localStorage.getItem("notes")
     
-    console.log("LOAD", saved)
     if (saved) {
       return JSON.parse(saved)
     }
 
     return [
       {
+        id: 1,
         title: "React Basics",
         content: "Components, Props, State"
       },
       {
+        id: 2,
         title: "TypeScript",
         content: "Types and Interfaces"
       }
@@ -32,7 +29,6 @@ export default function App() {
   })
   /// save effect
   useEffect(() => {
-    console.log("SAVE", notes)
 
     localStorage.setItem(
       "notes",
@@ -49,9 +45,9 @@ export default function App() {
     }
   }, []) */
   //delete
-  const deleteNote =(indexToDelete: number)=>{
+  const deleteNote =(idToDelete: number)=>{
     setNotes(
-      notes.filter((_,index)=>index !== indexToDelete)
+      notes.filter((note)=>note.id !== idToDelete)
     )
   }
 

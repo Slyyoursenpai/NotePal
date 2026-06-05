@@ -1,10 +1,6 @@
 import { useState } from "react"
 import NoteCard from "../components/NoteCard"
-
-type Note = {
-  title: string
-  content: string
-}
+import type { Note } from "../types/Note"
 
 export default function NotesPage({
   notes,
@@ -13,20 +9,23 @@ export default function NotesPage({
 }: {
   notes: Note[]
   setNotes: React.Dispatch<React.SetStateAction<Note[]>>
-  deleteNote: (indexToDelete: number) => void
+  deleteNote: (idToDelete: number) => void
 }) {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [search, setSearch] = useState("")
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editTitle, setEditTitle] = useState("")
+  const [editContent,setEditContent] = useState("")
 
   const addNote = () => {
     if (!title || !content) return
-
     setNotes([
       ...notes,
       {
-        title: title,
-        content: content
+        id: Date.now(),
+        title,
+        content
       }
     ])
 
@@ -34,6 +33,26 @@ export default function NotesPage({
     setContent("")
   }
 
+  const handleSave = () => {
+    if (editingId === null) return
+    
+    const updatedNotes = notes.map((note) => {
+      if (note.id === editingId){
+        return {
+          ...note,
+          title: editTitle,
+          content: editContent
+        }
+      }
+      return note
+    })
+
+    setNotes(updatedNotes)
+    setEditingId(null)
+    setEditTitle("")
+    setEditContent("")
+  }
+  
   return (
     <div>
       <h1>Notes Page</h1>
@@ -58,17 +77,51 @@ export default function NotesPage({
 
       <button onClick={addNote}>Add Note</button>
 
-      {notes.filter((note) =>
-          note.title.toLowerCase().includes(search.toLowerCase()) || 
-          note.content.toLowerCase().includes(search.toLowerCase())
-        ).map((note, index) => ( 
-        <NoteCard
-          key={index}
-          title={note.title}
-          content={note.content}
-          onDelete={()=>deleteNote(index)}
-        />
-      ))}
+    {notes
+      .filter((note) =>
+        note.title.toLowerCase().includes(search.toLowerCase()) ||
+        note.content.toLowerCase().includes(search.toLowerCase())
+      )
+      .map((note) => {
+
+        return (
+          <div key={note.id}>
+            {note.id === editingId ? (
+            <>
+             <label>
+              Title
+              <input 
+                value={editTitle} 
+                onChange={(e) => setEditTitle(e.target.value)} 
+              /></label>
+              <label>
+                Content
+              <input 
+                value={editContent} 
+                onChange={(e) => setEditContent(e.target.value)} 
+              /></label>
+              <button onClick={handleSave}>Save</button>
+            </>
+            ):(
+            <>
+              <NoteCard
+                title={note.title}
+                content={note.content}
+                onDelete={()=> deleteNote(note.id)}
+              />
+              <button onClick={()=>{
+                setEditingId(note.id)
+                setEditTitle(note.title)
+                setEditContent(note.content)
+                }}
+              >
+                Edit
+              </button>
+            </>
+            )}
+          </div>
+        )
+      })}
     </div>
   )
 }
