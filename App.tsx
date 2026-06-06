@@ -3,7 +3,6 @@ import NotesPage from "./pages/NotesPage"
 import AskAIPage from "./pages/AskAIPage"
 import BottomNav from "./components/BottomNav"
 import type { Note } from "./types/Note"
-
 export default function App() {
   const [page, setPage] = useState("notes")
 
@@ -63,9 +62,9 @@ export default function App() {
         />
       )}
 
-      {page === "askai" && <AskAIPage 
-      
-      />}
+      {page === "askai" && (
+        <AskAIPage notes = {notes}/>
+      )}
 
       <BottomNav setPage={setPage} currentPage={page} />
     </div>
