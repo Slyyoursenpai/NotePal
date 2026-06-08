@@ -7,7 +7,14 @@ export default function AIResultCard({
   note: Note
 }) {
   return (
-    <div>
+    <div 
+        style={{
+            border:"1px solid gray",
+            padding: "10px",
+            marginTop: "10px",
+            borderRadius: "8px"
+        }}
+    >
       <h3>{note.title}</h3>
       <p>{note.content}</p>
     </div>

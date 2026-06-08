@@ -55,6 +55,10 @@ function AskAIPage({
       <button onClick={handleAsk}>Ask AI</button>
       <p>{message}</p>
 
+      {results.length > 0 && (
+        <p>{results.length} notes found</p>
+      )}
+            
       {results.map((note)=>(
         <AIResultCard
           key={note.id}
