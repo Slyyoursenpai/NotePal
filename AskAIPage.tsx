@@ -1,17 +1,21 @@
 import { useState } from "react"
 import type { Note } from "../types/Note"
+import AIResultCard from "../components/AIResultCard"
+
 function AskAIPage({
   notes 
 }:{
   notes: Note[]
 }) {
   const [question, setQuestion] = useState("")
-  const [answer, setAnswer] = useState("")
+  const [results, setResults] = useState<Note[]>([])
+  const [message,setMessage] = useState("")
 
   const handleAsk = () => {
    /// setAnswer(question)
     if(!question.trim()){
-      setAnswer("Please enter a question.")
+      setMessage("Please enter a question.")
+      setResults([])
       return
 
     }
@@ -22,14 +26,13 @@ function AskAIPage({
 
 
     if(matchingNotes.length===0){
-      setAnswer("No matching notes found.")
+      setMessage("No matching notes found.")
+      setResults([])
       return
     }
   
-    setAnswer(
-      matchingNotes.map((note) => `${note.title}: ${note.content}`)
-      .join("|")
-    )
+    setResults(matchingNotes)
+    setMessage("")
   }
 
   return (
@@ -50,9 +53,33 @@ function AskAIPage({
       />
 
       <button onClick={handleAsk}>Ask AI</button>
-      <p>{answer}</p>
+      <p>{message}</p>
+
+      {results.map((note)=>(
+        <AIResultCard
+          key={note.id}
+          note={note}
+        />
+      ))}
     </div>
   )
 }
-
 export default AskAIPage
+
+/****
+Retrieval  Pipeline
+
+Question
+↓
+handleAsk()
+↓
+filter()
+↓
+matchingNotes
+↓
+setResults(matchingNotes)
+↓
+map()
+↓
+Render notes
+ */
