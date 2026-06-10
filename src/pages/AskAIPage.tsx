@@ -7,11 +7,12 @@ function AskAIPage({
 }:{
   notes: Note[]
 }) {
+
   const [question, setQuestion] = useState("")
   const [results, setResults] = useState<Note[]>([])
   const [message,setMessage] = useState("")
   const [aiAnswer, setAiAnswer] = useState("")
-
+  const [isLoading, setIsLoading] = useState(false)
 
   const retrieveNotes = (query: string) => {
     return notes.filter((note) =>
@@ -27,12 +28,20 @@ function AskAIPage({
     return `I found ${matchingNotes.length} notes related to "${query}"`
   }
 
-  const handleAsk  = async () => {
+  ///helper function for setResults([]), setAIAnswer("") to clear results
+  const clearResults = () => {
+    setResults([])
+    setAiAnswer("")
+   // setIsLoading(false)
+  }
+
+  const handleAsk = async () => {
    /// setAnswer(question)
     if(!question.trim()){
       setMessage("Please enter a question.")
-      setResults([])
-      setAiAnswer("")
+     // setResults([])
+     // setAiAnswer("")
+      clearResults()
       return
     }
 
@@ -44,22 +53,28 @@ function AskAIPage({
 
     if(matchingNotes.length===0){
       setMessage("No matching notes found.")
-      setResults([])
-      setAiAnswer("")
+     // setResults([])
+     // setAiAnswer("")
+     clearResults()
       return
     }
-  
+
     setResults(matchingNotes)
     
+    setIsLoading(true)
+
     const answer = await generateAnswer(
       question, matchingNotes
     )
 
+    {isLoading && (
+      <p>Finding from notes...</p>
+    )}
     setAiAnswer(answer)
     /*setAiAnswer(
       `I found ${matchingNotes.length} notes related to "${question}"`
     ) */
-
+    setIsLoading(false)
     setMessage("")
   }
 
