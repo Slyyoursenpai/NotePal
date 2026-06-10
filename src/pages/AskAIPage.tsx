@@ -10,28 +10,56 @@ function AskAIPage({
   const [question, setQuestion] = useState("")
   const [results, setResults] = useState<Note[]>([])
   const [message,setMessage] = useState("")
+  const [aiAnswer, setAiAnswer] = useState("")
+
+
+  const retrieveNotes = (query: string) => {
+    return notes.filter((note) =>
+      note.title.toLowerCase().includes(query.toLowerCase()) ||
+      note.content.toLowerCase().includes(query.toLowerCase())
+    )
+  }
+
+  const generateAnswer = (
+    query:string,
+    matchingNotes: Note[]
+  ) => {
+    return `I found ${matchingNotes.length} notes related to "${query}"`
+  }
 
   const handleAsk = () => {
    /// setAnswer(question)
     if(!question.trim()){
       setMessage("Please enter a question.")
       setResults([])
+      setAiAnswer("")
       return
-
     }
-    const matchingNotes = notes.filter((note) =>
+
+    const matchingNotes = retrieveNotes(question)   
+     /**  notes.filter((note) =>
       note.title.toLowerCase().includes(question.toLowerCase()) ||
       note.content.toLowerCase().includes(question.toLowerCase())
-    )
-
+    ) **/
 
     if(matchingNotes.length===0){
       setMessage("No matching notes found.")
       setResults([])
+      setAiAnswer("")
       return
     }
   
     setResults(matchingNotes)
+    
+    const answer = generateAnswer(
+      question, matchingNotes
+    )
+
+    setAiAnswer(answer)
+    /*setAiAnswer(
+      `I found ${matchingNotes.length} notes related to "${question}"`
+    ) */
+
     setMessage("")
   }
 
@@ -53,6 +81,19 @@ function AskAIPage({
       />
 
       <button onClick={handleAsk}>Ask AI</button>
+    
+      {aiAnswer && (
+        <div
+          style={{
+            border: "1px solid gray",
+            padding: "10px",
+            borderRadius: "8px",
+            marginBottom: "10px" 
+          }}
+        >
+        <p>{aiAnswer}</p>
+        </div>
+      )}
       <p>{message}</p>
 
       {results.length > 0 && (
