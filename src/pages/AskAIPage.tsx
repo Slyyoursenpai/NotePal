@@ -20,7 +20,7 @@ function AskAIPage({
       note.content.toLowerCase().includes(query.toLowerCase())
     )
   }
-
+  //// helper function for answer generation and return
   const generateAnswer = async (
     query:string,
     matchingNotes: Note[]
@@ -34,7 +34,7 @@ function AskAIPage({
     setAiAnswer("")
    // setIsLoading(false)
   }
-
+  /// 
   const handleAsk = async () => {
    /// setAnswer(question)
     if(!question.trim()){
