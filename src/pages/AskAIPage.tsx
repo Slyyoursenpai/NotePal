@@ -1,6 +1,7 @@
 import { useState } from "react"
 import type { Note } from "../types/Note"
 import AIResultCard from "../components/AIResultCard"
+import { retrieveNotes,generateAnswer} from "../utils/askAIHelpers"
 
 function AskAIPage({
   notes 
@@ -14,20 +15,6 @@ function AskAIPage({
   const [aiAnswer, setAiAnswer] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  const retrieveNotes = (query: string) => {
-    return notes.filter((note) =>
-      note.title.toLowerCase().includes(query.toLowerCase()) ||
-      note.content.toLowerCase().includes(query.toLowerCase())
-    )
-  }
-  //// helper function for answer generation and return
-  const generateAnswer = async (
-    query:string,
-    matchingNotes: Note[]
-  ) => {
-    return `I found ${matchingNotes.length} notes related to "${query}"`
-  }
-
   ///helper function for setResults([]), setAIAnswer("") to clear results
   const clearResults = () => {
     setResults([])
@@ -39,41 +26,26 @@ function AskAIPage({
    /// setAnswer(question)
     if(!question.trim()){
       setMessage("Please enter a question.")
-     // setResults([])
-     // setAiAnswer("")
       clearResults()
       return
     }
 
-    const matchingNotes = retrieveNotes(question)   
-     /**  notes.filter((note) =>
-      note.title.toLowerCase().includes(question.toLowerCase()) ||
-      note.content.toLowerCase().includes(question.toLowerCase())
-    ) **/
+    const matchingNotes = retrieveNotes(question, notes)   
 
     if(matchingNotes.length===0){
-      setMessage("No matching notes found.")
-     // setResults([])
-     // setAiAnswer("")
+     setMessage("No matching notes found.")
      clearResults()
       return
     }
-
-    setResults(matchingNotes)
     
     setIsLoading(true)
+    setResults(matchingNotes)
 
     const answer = await generateAnswer(
       question, matchingNotes
     )
 
-    {isLoading && (
-      <p>Finding from notes...</p>
-    )}
     setAiAnswer(answer)
-    /*setAiAnswer(
-      `I found ${matchingNotes.length} notes related to "${question}"`
-    ) */
     setIsLoading(false)
     setMessage("")
   }
@@ -81,13 +53,6 @@ function AskAIPage({
   return (
     <div>
       <h1>Ask AI Page</h1>
-      <p> Total Notes: {notes.length}</p>
-      
-      {notes.map((note)=>(
-        <p key={note.id}>
-          {note.title}
-        </p>
-      ))}
 
       <input
         placeholder="Ask a question..."
@@ -96,14 +61,19 @@ function AskAIPage({
       />
 
       <button onClick={handleAsk}>Ask AI</button>
-    
+      
+      {isLoading && (
+      <p>Finding from notes...</p>
+      )}
+
       {aiAnswer && (
         <div
           style={{
             border: "1px solid gray",
             padding: "10px",
             borderRadius: "8px",
-            marginBottom: "10px" 
+            marginBottom: "11px",
+            marginTop: "10px" 
           }}
         >
         <p>{aiAnswer}</p>
