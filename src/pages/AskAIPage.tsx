@@ -20,14 +20,14 @@ function AskAIPage({
     )
   }
 
-  const generateAnswer = (
+  const generateAnswer = async (
     query:string,
     matchingNotes: Note[]
   ) => {
     return `I found ${matchingNotes.length} notes related to "${query}"`
   }
 
-  const handleAsk = () => {
+  const handleAsk  = async () => {
    /// setAnswer(question)
     if(!question.trim()){
       setMessage("Please enter a question.")
@@ -51,7 +51,7 @@ function AskAIPage({
   
     setResults(matchingNotes)
     
-    const answer = generateAnswer(
+    const answer = await generateAnswer(
       question, matchingNotes
     )
 
