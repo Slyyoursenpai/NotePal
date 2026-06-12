@@ -1,13 +1,25 @@
-function NoteCard(props:{title: string; content: string; onDelete: ()=>void}) 
+import "./NoteCard.css"
+function NoteCard(props:{
+  title: string; 
+  content: string; 
+  onDelete: ()=>void
+  onEdit: ()=>void
+})
 {
   return (
-    <div>
+    <div className="note-card">
       <h3>{props.title}</h3>
       <p>{props.content}</p>
       
-      <button onClick={props.onDelete}>
-        Delete
-      </button>
+      <div className="card-actions">
+        <button
+          className="edit-btn"
+          onClick={props.onEdit}>Edit</button>
+
+        <button
+          className="delete-btn"
+          onClick={props.onDelete}>Delete</button>
+      </div>
     </div>
   )
 }

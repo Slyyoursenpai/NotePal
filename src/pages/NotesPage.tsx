@@ -1,6 +1,7 @@
 import { useState } from "react"
 import NoteCard from "../components/NoteCard"
 import type { Note } from "../types/Note"
+import "./NotesPage.css"
 
 export default function NotesPage({
   notes,
@@ -55,28 +56,37 @@ export default function NotesPage({
   
   return (
     <div>
-      <h1>Notes Page</h1>
+      <h2>My Notes</h2>
 
+      <p>Search Notes</p>
       <input
+        className="input-field"
         placeholder="Search Notes"
         value={search}
         onChange={(e)=>setSearch(e.target.value)}
       />
       
+      <p>Create Note</p>
+
+      <div className="create-note">
       <input
+        className="input-field"
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-
-      <input
+      <textarea
+        className="input-field"
         placeholder="Content"
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
+      <button onClick={addNote}>
+        Add Note
+      </button>
+      </div>
 
-      <button onClick={addNote}>Add Note</button>
-
+    <p>Notes</p>
     {notes
       .filter((note) =>
         note.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -91,32 +101,36 @@ export default function NotesPage({
              <label>
               Title
               <input 
+              className="input-field"
                 value={editTitle} 
-                onChange={(e) => setEditTitle(e.target.value)} 
-              /></label>
+                onChange={(e) => 
+                  setEditTitle(e.target.value)} 
+              />
+              </label>
+              
               <label>
                 Content
-              <input 
+              <textarea
+                className="input-field" 
                 value={editContent} 
-                onChange={(e) => setEditContent(e.target.value)} 
-              /></label>
+                onChange={(e) => 
+                  setEditContent(e.target.value)} 
+              />
+              </label>
               <button onClick={handleSave}>Save</button>
             </>
+          
             ):(
             <>
-              <NoteCard
-                title={note.title}
-                content={note.content}
-                onDelete={()=> deleteNote(note.id)}
-              />
-              <button onClick={()=>{
+            <NoteCard
+              title={note.title}
+              content={note.content}
+              onDelete={() => deleteNote(note.id)}
+              onEdit={() => {
                 setEditingId(note.id)
                 setEditTitle(note.title)
                 setEditContent(note.content)
-                }}
-              >
-                Edit
-              </button>
+              }}/>
             </>
             )}
           </div>

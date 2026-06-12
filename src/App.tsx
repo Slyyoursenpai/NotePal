@@ -3,6 +3,9 @@ import NotesPage from "./pages/NotesPage"
 import AskAIPage from "./pages/AskAIPage"
 import BottomNav from "./components/BottomNav"
 import type { Note } from "./types/Note"
+import "./App.css"
+import Header from "./components/Header"
+
 export default function App() {
   const [page, setPage] = useState("notes")
 
@@ -10,7 +13,7 @@ export default function App() {
     const saved = localStorage.getItem("notes")
     
     if (saved) {
-      return JSON.parse(saved)
+      return JSON.parse(saved) 
     }
 
     return [
@@ -51,22 +54,30 @@ export default function App() {
   }
 
   return (
-    <div>
-      <h1>NotePal</h1>
+  <div className="app">
+    <div className="app-container">
+    <Header />
 
-      {page === "notes" && (
-        <NotesPage 
-        notes={notes} 
-        setNotes={setNotes} 
-        deleteNote={deleteNote}
-        />
-      )}
+      <main className="content">
 
-      {page === "askai" && (
-        <AskAIPage notes = {notes}/>
-      )}
+        {page === "notes" && (
+          <NotesPage
+            notes={notes}
+            setNotes={setNotes}
+            deleteNote={deleteNote}
+          />
+        )}
 
-      <BottomNav setPage={setPage} currentPage={page} />
+        {page === "askai" && (
+          <AskAIPage notes={notes}/>
+        )}
+      </main>
+      
+      <BottomNav
+        setPage={setPage}
+        currentPage={page}
+      />
     </div>
-  )
+  </div>
+)
 }

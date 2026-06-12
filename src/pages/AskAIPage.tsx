@@ -49,7 +49,7 @@ function AskAIPage({
       (note, index) =>
         `NOTE ${index + 1}
     Title: ${note.title}
-    Content: ${note.content}`
+    Content: ${note.content}` 
     ).join("\n\n")
     
     setIsLoading(true)
@@ -75,11 +75,20 @@ function AskAIPage({
   }
   return (
     <div>
-      <h1>Ask AI Page</h1>
+      <h1>Ask Notepal</h1>
+      <h2>How can I help?</h2>
+      <p>I can read across all your notes.</p>
       <input
         placeholder="Ask a question..."
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
+        style={{
+          width: "100%",
+          padding:"12px",
+          borderRadius: "8px",
+          border: "1px solid #ccc",
+          marginBottom: "10px"
+        }}
       />
 
       <button onClick={handleAsk}>Ask AI</button>
@@ -104,7 +113,7 @@ function AskAIPage({
       <p>{message}</p>
 
       {results.length > 0 && (
-        <p>{results.length} notes found</p>
+        <p>Sources ({results.length})</p>
       )}
   
       {results.map((note)=>(
