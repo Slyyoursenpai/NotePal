@@ -1,0 +1,31 @@
+.app {
+  height: 100vh;
+  background: #18181b;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 900px;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 16px;
+  border-bottom: 1px solid #3f3f46;
+
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  min-height: 0;
+}
