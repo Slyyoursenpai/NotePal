@@ -6,11 +6,17 @@ import "./NotesPage.css"
 export default function NotesPage({
   notes,
   setNotes,
-  deleteNote
+  deleteNote,
+  showCreateNote,
+  onNoteAdded,
+  setSelectedNote
 }: {
   notes: Note[]
   setNotes: React.Dispatch<React.SetStateAction<Note[]>>
   deleteNote: (idToDelete: number) => void
+  showCreateNote: boolean
+  onNoteAdded: ()=> void
+  setSelectedNote: (note:Note)=>void
 }) {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
@@ -29,9 +35,9 @@ export default function NotesPage({
         content
       }
     ])
-
     setTitle("")
     setContent("")
+    onNoteAdded()
   }
 
   const handleSave = () => {
@@ -56,37 +62,40 @@ export default function NotesPage({
   
   return (
     <div>
-      <h2>My Notes</h2>
 
-      <p>Search Notes</p>
+      <h3>Search Notes</h3>
       <input
-        className="input-field"
+        className="search-input"
         placeholder="Search Notes"
         value={search}
         onChange={(e)=>setSearch(e.target.value)}
       />
       
-      <p>Create Note</p>
-
-      <div className="create-note">
-      <input
-        className="input-field"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <textarea
-        className="input-field"
-        placeholder="Content"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <button onClick={addNote}>
-        Add Note
-      </button>
+      {showCreateNote && (
+        <div className="create-note-card">
+        <div className="create-note">
+        <h4>Create Note</h4>
+        <input
+          className="input-field"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea
+          className="input-field"
+          placeholder="Start writing. NotePal can read everything you put here..."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <button onClick={addNote}>
+          Save Note
+        </button>
+        </div>
       </div>
+      )}
 
-    <p>Notes</p>
+    <h3>My Notes</h3>
+    <div className="notes-grid">
     {notes
       .filter((note) =>
         note.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -127,6 +136,7 @@ export default function NotesPage({
               content={note.content}
               onDelete={() => deleteNote(note.id)}
               onEdit={() => {
+                setSelectedNote(note)
                 setEditingId(note.id)
                 setEditTitle(note.title)
                 setEditContent(note.content)
@@ -136,6 +146,7 @@ export default function NotesPage({
           </div>
         )
       })}
+      </div>
     </div>
   )
 }

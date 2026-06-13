@@ -6,15 +6,23 @@
 
 .bottom-nav button {
   flex: 1;
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px;
   background: none;
   border: none;
-  color: white;
   cursor: pointer;
 }
 
 .nav-button {
   color: #a1a1aa;
+}
+
+.nav-button span {
+  font-size: 12px;
 }
 
 .nav-button.active {
