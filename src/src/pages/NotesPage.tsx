@@ -21,9 +21,6 @@ export default function NotesPage({
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [search, setSearch] = useState("")
-  const [editingId, setEditingId] = useState<number | null>(null)
-  const [editTitle, setEditTitle] = useState("")
-  const [editContent,setEditContent] = useState("")
 
   const addNote = () => {
     if (!title || !content) return
@@ -32,7 +29,8 @@ export default function NotesPage({
       {
         id: Date.now(),
         title,
-        content
+        content,
+        createdAt: new Date().toISOString()
       }
     ])
     setTitle("")
@@ -40,26 +38,11 @@ export default function NotesPage({
     onNoteAdded()
   }
 
-  const handleSave = () => {
-    if (editingId === null) return
-    
-    const updatedNotes = notes.map((note) => {
-      if (note.id === editingId){
-        return {
-          ...note,
-          title: editTitle,
-          content: editContent
-        }
-      }
-      return note
-    })
+  const filteredNotes = notes.filter(
+    (note) => note.title.toLowerCase().includes(search.toLowerCase())||
+              note.content.toLowerCase().includes(search.toLowerCase())
+  )
 
-    setNotes(updatedNotes)
-    setEditingId(null)
-    setEditTitle("")
-    setEditContent("")
-  }
-  
   return (
     <div>
 
@@ -95,58 +78,30 @@ export default function NotesPage({
       )}
 
     <h3>My Notes</h3>
-    <div className="notes-grid">
-    {notes
-      .filter((note) =>
-        note.title.toLowerCase().includes(search.toLowerCase()) ||
-        note.content.toLowerCase().includes(search.toLowerCase())
-      )
-      .map((note) => {
-
-        return (
+      {filteredNotes.length === 0 ? (
+      <div className="empty-state">
+        {search ? (
+          <h3>No notes found</h3>
+        ) : (
+        <>
+          <h3>No notes yet</h3>
+          <p>Create your first note using the Add Note button.</p>
+        </>
+        )}</div>):(
+          <div className="notes-grid">
+          {filteredNotes.map((note) => (
           <div key={note.id}>
-            {note.id === editingId ? (
-            <>
-             <label>
-              Title
-              <input 
-              className="input-field"
-                value={editTitle} 
-                onChange={(e) => 
-                  setEditTitle(e.target.value)} 
-              />
-              </label>
-              
-              <label>
-                Content
-              <textarea
-                className="input-field" 
-                value={editContent} 
-                onChange={(e) => 
-                  setEditContent(e.target.value)} 
-              />
-              </label>
-              <button onClick={handleSave}>Save</button>
-            </>
-          
-            ):(
-            <>
             <NoteCard
               title={note.title}
               content={note.content}
+              createdAt={note.createdAt}
               onDelete={() => deleteNote(note.id)}
-              onEdit={() => {
-                setSelectedNote(note)
-                setEditingId(note.id)
-                setEditTitle(note.title)
-                setEditContent(note.content)
-              }}/>
-            </>
-            )}
+              onOpen={() => setSelectedNote(note)}
+            />
           </div>
-        )
-      })}
-      </div>
+        ))}
+        </div>
+      )}
     </div>
   )
 }
