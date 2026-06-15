@@ -4,12 +4,16 @@ function NoteCard(props:{
   content: string; 
   onDelete: ()=>void
   onEdit: ()=>void
+  onOpen: ()=>void
 })
 {
   return (
-    <div className="note-card">
+    <div className="note-card" onClick={props.onOpen}>  
       <h3>{props.title}</h3>
-      <p>{props.content}</p>
+      <p>{props.content.length > 120
+        ? props.content.slice(0,120)+"..."
+        :props.content}
+        </p>
       
       <div className="card-actions">
         <button

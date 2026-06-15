@@ -5,9 +5,12 @@ import BottomNav from "./components/BottomNav"
 import type { Note } from "./types/Note"
 import "./App.css"
 import Header from "./components/Header"
+import NoteEditor from "./components/NoteEditor"
 
 export default function App() {
   const [page, setPage] = useState("notes")
+  const [showCreateNote, setShowCreateNote] = useState(false)
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null)
 
   const [notes, setNotes] = useState<Note[]>(() => {
     const saved = localStorage.getItem("notes")
@@ -29,6 +32,7 @@ export default function App() {
       }
     ]
   })
+
   /// save effect
   useEffect(() => {
 
@@ -56,7 +60,19 @@ export default function App() {
   return (
   <div className="app">
     <div className="app-container">
-    <Header />
+    <Header
+      onAddNote={() => 
+      setShowCreateNote(!showCreateNote)
+      }
+      showCreateNote={showCreateNote}
+    />
+
+    {selectedNote && (
+      <NoteEditor
+        note={selectedNote}
+        onClose={() => setSelectedNote(null)}
+      />
+    )}
 
       <main className="content">
 
@@ -65,6 +81,9 @@ export default function App() {
             notes={notes}
             setNotes={setNotes}
             deleteNote={deleteNote}
+            showCreateNote={showCreateNote}
+            onNoteAdded={()=>setShowCreateNote(false)}
+            setSelectedNote={setSelectedNote}
           />
         )}
 
