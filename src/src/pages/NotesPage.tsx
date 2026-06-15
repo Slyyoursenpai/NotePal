@@ -21,9 +21,9 @@ export default function NotesPage({
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [search, setSearch] = useState("")
-  const [editingId, setEditingId] = useState<number | null>(null)
-  const [editTitle, setEditTitle] = useState("")
-  const [editContent,setEditContent] = useState("")
+ // const [editingId, setEditingId] = useState<number | null>(null)
+  //const [editTitle, setEditTitle] = useState("")
+  //const [editContent,setEditContent] = useState("")
 
   const addNote = () => {
     if (!title || !content) return
@@ -40,7 +40,7 @@ export default function NotesPage({
     onNoteAdded()
   }
 
-  const handleSave = () => {
+ /* const handleSave = () => {
     if (editingId === null) return
     
     const updatedNotes = notes.map((note) => {
@@ -58,7 +58,7 @@ export default function NotesPage({
     setEditingId(null)
     setEditTitle("")
     setEditContent("")
-  }
+  } */
   
   return (
     <div>
@@ -105,44 +105,12 @@ export default function NotesPage({
 
         return (
           <div key={note.id}>
-            {note.id === editingId ? (
-            <>
-             <label>
-              Title
-              <input 
-              className="input-field"
-                value={editTitle} 
-                onChange={(e) => 
-                  setEditTitle(e.target.value)} 
-              />
-              </label>
-              
-              <label>
-                Content
-              <textarea
-                className="input-field" 
-                value={editContent} 
-                onChange={(e) => 
-                  setEditContent(e.target.value)} 
-              />
-              </label>
-              <button onClick={handleSave}>Save</button>
-            </>
-          
-            ):(
-            <>
             <NoteCard
               title={note.title}
               content={note.content}
               onDelete={() => deleteNote(note.id)}
-              onEdit={() => {
-                setSelectedNote(note)
-                setEditingId(note.id)
-                setEditTitle(note.title)
-                setEditContent(note.content)
-              }}/>
-            </>
-            )}
+              onOpen={() => setSelectedNote(note)}
+            />
           </div>
         )
       })}

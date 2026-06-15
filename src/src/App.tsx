@@ -5,6 +5,7 @@ import BottomNav from "./components/BottomNav"
 import type { Note } from "./types/Note"
 import "./App.css"
 import Header from "./components/Header"
+import NoteEditor from "./components/NoteEditor"
 
 export default function App() {
   const [page, setPage] = useState("notes")
@@ -65,6 +66,15 @@ export default function App() {
       }
       showCreateNote={showCreateNote}
     />
+
+    {selectedNote && (
+      <NoteEditor
+        note={selectedNote}
+        notes={notes}
+        setNotes={setNotes}
+        onClose={() => setSelectedNote(null)}
+      />
+    )}
 
       <main className="content">
 
