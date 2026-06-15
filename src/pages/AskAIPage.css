@@ -1,0 +1,55 @@
+.input-field {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px;
+
+  background: #27272a;
+  color: white;
+
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+
+  margin-bottom: 12px;
+}
+
+.ask-btn {
+  background: #2563eb;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 16px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+}
+
+.ask-btn:hover {
+  background: #1d4ed8;
+}
+
+.ai-answer {
+  background: #27272a;
+
+  border: 1px solid #3f3f46;
+
+  border-radius: 12px;
+
+  padding: 16px;
+
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.loading-text {
+  color: #60a5fa;
+  margin-top: 10px;
+}
+
+.sources-title {
+  margin-top: 20px;
+  color: #d4d4d8;
+}
