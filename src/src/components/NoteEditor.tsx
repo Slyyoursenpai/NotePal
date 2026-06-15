@@ -6,12 +6,15 @@ type Props = {
     note: Note
     notes: Note[]
     setNotes: React.Dispatch<React.SetStateAction<Note[]>>
+    deleteNote: (id: number) => void
     onClose: () => void
 }
+
 export default function NoteEditor({
     note,
     notes,
     setNotes,
+    deleteNote,
     onClose
 }: Props){
 
@@ -43,6 +46,14 @@ export default function NoteEditor({
             <div className="note-editor-header">
                 <button onClick={onClose}>
                     ← Notes
+                </button>
+
+                <button className="editor-delete-btn"
+                    onClick={() => {
+                        deleteNote(note.id)
+                        onClose()
+                    }}>
+                    🗑
                 </button>
             </div>
             <input

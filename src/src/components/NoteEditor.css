@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .note-editor-header button {
@@ -67,4 +67,11 @@
   line-height: 1.6;
   resize: none;
   outline: none;
+}
+
+.editor-delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
 }

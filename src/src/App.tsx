@@ -23,12 +23,14 @@ export default function App() {
       {
         id: 1,
         title: "React Basics",
-        content: "Components, Props, State"
+        content: "Components, Props, State",
+        createdAt: new Date().toISOString()
       },
       {
         id: 2,
         title: "TypeScript",
-        content: "Types and Interfaces"
+        content: "Types and Interfaces",
+        createdAt: new Date().toISOString()
       }
     ]
   })
@@ -72,6 +74,7 @@ export default function App() {
         note={selectedNote}
         notes={notes}
         setNotes={setNotes}
+        deleteNote={deleteNote}
         onClose={() => setSelectedNote(null)}
       />
     )}

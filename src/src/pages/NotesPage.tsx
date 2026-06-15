@@ -32,7 +32,8 @@ export default function NotesPage({
       {
         id: Date.now(),
         title,
-        content
+        content,
+        createdAt: new Date().toISOString()
       }
     ])
     setTitle("")
@@ -108,6 +109,7 @@ export default function NotesPage({
             <NoteCard
               title={note.title}
               content={note.content}
+              createdAt={note.createdAt}
               onDelete={() => deleteNote(note.id)}
               onOpen={() => setSelectedNote(note)}
             />
