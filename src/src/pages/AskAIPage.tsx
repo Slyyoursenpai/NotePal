@@ -3,6 +3,7 @@ import type { Note } from "../types/Note"
 import AIResultCard from "../components/AIResultCard"
 import {retrieveNotes} from "../utils/askAIHelpers"
 import {generateAIResponse} from "../utils/geminiHelper"
+import "./AskAIPage.css"
 
 function AskAIPage({
   notes 
@@ -22,11 +23,9 @@ function AskAIPage({
   const clearResults = () => {
     setResults([])
     setAiAnswer("")
-   // setIsLoading(false)
   }
-  /// 
+
   const handleAsk = async () => {  
-   /// setAnswer(question)
     if(!question.trim()){
       setMessage("Please enter a question.")
       clearResults()
@@ -35,16 +34,6 @@ function AskAIPage({
 
    const matchingNotes = retrieveNotes(question, notes)
     
- /*   const context = matchingNotes.map(
-      (note) => `Title: ${note.title}\nContent: ${note.content}`
-    ).join("\n\n") */
-
-   /* if(matchingNotes.length===0){
-     setMessage("No matching notes found.")
-     clearResults()
-      return
-    } */
-
     const context = notes.map(
       (note, index) =>
         `NOTE ${index + 1}
@@ -71,7 +60,6 @@ function AskAIPage({
     finally {
       setIsLoading(false)
     }
-   // setMessage("")
   }
   return (
     <div>
@@ -79,41 +67,29 @@ function AskAIPage({
       <h2>How can I help?</h2>
       <p>I can read across all your notes.</p>
       <input
-        placeholder="Ask a question..."
+        className="input-field"
+        placeholder="Ask NotePal..."
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
-        style={{
-          width: "100%",
-          padding:"12px",
-          borderRadius: "8px",
-          border: "1px solid #ccc",
-          marginBottom: "10px"
-        }}
-      />
+        />
 
-      <button onClick={handleAsk}>Ask AI</button>
+      <button 
+      className="ask-btn"
+      onClick={handleAsk}>Ask AI</button>
       
       {isLoading && (
-      <p>Finding from notes...</p>
+      <p className="loading-text">Searching your notes...</p>
       )}
 
       {aiAnswer && (
-        <div
-          style={{
-            border: "1px solid gray",
-            padding: "10px",
-            borderRadius: "8px",
-            marginBottom: "11px",
-            marginTop: "10px" 
-          }}
-        >
+        <div className="ai-answer">
         <p>{aiAnswer}</p>
         </div>
       )}
       <p>{message}</p>
 
       {results.length > 0 && (
-        <p>Sources ({results.length})</p>
+        <h3 className="sources-title">Sources</h3>
       )}
   
       {results.map((note)=>(

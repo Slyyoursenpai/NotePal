@@ -1,0 +1,23 @@
+.bottom-nav {
+  display: flex;
+  border-top: 1px solid #3f3f46;
+  background: #27272a;
+}
+
+.bottom-nav button {
+  flex: 1;
+  padding: 16px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.nav-button {
+  color: #a1a1aa;
+}
+
+.nav-button.active {
+  color: white;
+  font-weight: bold;
+}
