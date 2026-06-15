@@ -77,6 +77,18 @@
   gap: 16px;
 }
 
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #a1a1aa;
+}
+
+.empty-state h3 {
+  color: white;
+  margin-bottom: 8px;
+}
+
+
 @media (min-width: 768px) {
   .notes-grid {
     grid-template-columns: repeat(2, 1fr);
