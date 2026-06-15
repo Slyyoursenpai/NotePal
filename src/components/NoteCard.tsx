@@ -16,13 +16,17 @@ function NoteCard(props:{
         </p>
       
       <div className="card-actions">
-        <button
-          className="edit-btn"
-          onClick={props.onEdit}>Edit</button>
-
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          props.onEdit()
+        }}>Edit</button>
+        
         <button
           className="delete-btn"
-          onClick={props.onDelete}>Delete</button>
+          onClick={(e) => {
+            e.stopPropagation() 
+            props.onDelete()}}>Delete</button>
       </div>
     </div>
   )

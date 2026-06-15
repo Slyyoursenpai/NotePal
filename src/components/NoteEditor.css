@@ -45,3 +45,26 @@
   padding: 24px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
+
+.editor-title {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.editor-content {
+  width: 100%;
+  min-height: 400px;
+  background: transparent;
+  border: none;
+  color: #d4d4d8;
+  font-size: 16px;
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+}

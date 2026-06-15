@@ -70,6 +70,8 @@ export default function App() {
     {selectedNote && (
       <NoteEditor
         note={selectedNote}
+        notes={notes}
+        setNotes={setNotes}
         onClose={() => setSelectedNote(null)}
       />
     )}

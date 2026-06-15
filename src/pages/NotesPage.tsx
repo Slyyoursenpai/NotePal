@@ -137,7 +137,7 @@ export default function NotesPage({
               onDelete={() => deleteNote(note.id)}
               onOpen={() => setSelectedNote(note)}
               onEdit={() => {
-                setSelectedNote(note)
+                //setSelectedNote(note)
                 setEditingId(note.id)
                 setEditTitle(note.title)
                 setEditContent(note.content)
