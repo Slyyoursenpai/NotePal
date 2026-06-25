@@ -1,13 +1,26 @@
 .note-card {
-  position: relative;
-  background: #27272a;
-  border: 1px solid #3f3f46;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  transition: all 0.2s;
-  cursor: pointer;
-  
+position: relative;
+background: #27272a;
+border: 1px solid #3f3f46;
+border-radius: 12px;
+padding: 16px;
+margin-bottom: 12px;
+cursor: pointer;
+transition:
+transform 0.2s ease,
+box-shadow 0.2s ease;
+break-inside: avoid;
+animation: cardAppear 0.25s ease;
+}
+@keyframes cardAppear {
+from {
+opacity: 0;
+transform: translateY(8px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }
 
 .note-card:hover .card-actions{
@@ -16,7 +29,9 @@
 
 .note-card:hover{
   transform: translateY(-2px);
-  border-color: #52525b;}
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.12);
+}
 
 .note-card h3 {
   margin-top: 0;
@@ -37,6 +52,17 @@
   color: white;
   padding: 8px 12px;
   cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.05);
+}
+
+.delete-btn:active {
+  transform: scale(0.95);
 }
 
 .card-actions {
