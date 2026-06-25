@@ -1,5 +1,5 @@
 import "./ChatMessage.css"
-//import ReactMarkdown from "react-markdown"
+import ReactMarkdown from "react-markdown"
 
 type Props = {
     role: "user" | "assistant"
@@ -15,10 +15,10 @@ export default function ChatMessage({
             {role === "user" ? (
                 <div className="message-bubble">
                     {content}
-        </div>
+                </div>
         ) : (
         <div className="assistant-content">
-           {content}
+            <ReactMarkdown>{content}</ReactMarkdown>
         </div>
     )}
     </div>

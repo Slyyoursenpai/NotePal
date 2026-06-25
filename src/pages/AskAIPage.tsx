@@ -24,9 +24,10 @@ function AskAIPage({
   >
 }) {
   
+  //console.log(import.meta.env.VITE_API_KEY)
 
   const [question, setQuestion] = useState("")
-  const [results, setResults] = useState<Note[]>([])
+  const [_results, setResults] = useState<Note[]>([])
   const [message,setMessage] = useState("")
   const bottomRef = useRef<HTMLDivElement>(null)
   //const [aiAnswer, setAiAnswer] = useState("") // to store one answer
@@ -82,7 +83,7 @@ function AskAIPage({
     }
 
    const matchingNotes = retrieveNotes(question, notes)
-    
+    /// use notes.map as failsafe (sends all notes to LLM) | use matchingNotes.map to use ranking retrieval
     const context = notes.map(
       (note, index) =>
         `NOTE ${index + 1}

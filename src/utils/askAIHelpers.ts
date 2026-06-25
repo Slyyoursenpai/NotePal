@@ -13,17 +13,23 @@ export const retrieveNotes = (
   return notes
     .map(note => {
 
-      const text =
-        `${note.title} ${note.content}`.toLowerCase()
+      //const text =`${note.title} ${note.content}`.toLowerCase()
+      const titleText = `${note.title}`.toLowerCase()
+      const contentText = `${note.content}`.toLowerCase()
 
+      let titleScore = 0
+      let contentScore = 0
       let score = 0
 
       words.forEach(word => {
-        if (text.includes(word)) {
-          score++
+        if (titleText.includes(word)) {
+          titleScore+=3
+        }
+        if (contentText.includes(word)){
+          contentScore+=1
         }
       })
-
+      score = titleScore+contentScore
       return {
         note,
         score
@@ -31,8 +37,6 @@ export const retrieveNotes = (
     })
 
     .filter(item => item.score > 0)
-
     .sort((a, b) => b.score - a.score)
-
     .map(item => item.note)
 }
