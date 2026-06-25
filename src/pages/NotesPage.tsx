@@ -5,24 +5,24 @@ import "./NotesPage.css"
 
 export default function NotesPage({
   notes,
-  setNotes,
+  //setNotes,
   deleteNote,
-  showCreateNote,
-  onNoteAdded,
+ // showCreateNote,
+  //onNoteAdded,
   setSelectedNote
 }: {
   notes: Note[]
-  setNotes: React.Dispatch<React.SetStateAction<Note[]>>
+  //setNotes: React.Dispatch<React.SetStateAction<Note[]>>
   deleteNote: (idToDelete: number) => void
-  showCreateNote: boolean
-  onNoteAdded: ()=> void
+ // showCreateNote: boolean
+ // onNoteAdded: ()=> void
   setSelectedNote: (note:Note)=>void
 }) {
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
+ // const [title, setTitle] = useState("")
+ // const [content, setContent] = useState("")
   const [search, setSearch] = useState("")
 
-  const addNote = () => {
+ {/*} const addNote = () => {
     if (!title || !content) return
     setNotes([
       ...notes,
@@ -35,26 +35,26 @@ export default function NotesPage({
     ])
     setTitle("")
     setContent("")
-    onNoteAdded()
-  }
+    //onNoteAdded()
+  } **/}
 
   const filteredNotes = notes.filter(
     (note) => note.title.toLowerCase().includes(search.toLowerCase())||
               note.content.toLowerCase().includes(search.toLowerCase())
   )
-
   return (
     <div>
 
-      <h3>Search Notes</h3>
+      {/*<h3>Search Notes</h3> */}
       <input
+        id="search-input"
         className="search-input"
         placeholder="Search Notes"
         value={search}
         onChange={(e)=>setSearch(e.target.value)}
       />
       
-      {showCreateNote && (
+      {/**{showCreateNote && (
         <div className="create-note-card">
         <div className="create-note">
         <h4>Create Note</h4>
@@ -75,7 +75,7 @@ export default function NotesPage({
         </button>
         </div>
       </div>
-      )}
+      )} **/}
 
     <h3>My Notes</h3>
       {filteredNotes.length === 0 ? (

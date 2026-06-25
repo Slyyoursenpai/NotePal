@@ -8,9 +8,8 @@
 
 .app-container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1150px;
   height: 100vh;
-
   display: flex;
   flex-direction: column;
 }
@@ -25,7 +24,11 @@
 
 .content {
   flex: 1;
-  padding: 16px;
   overflow-y: auto;
   min-height: 0;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box
 }

@@ -6,21 +6,40 @@ import type { Note } from "./types/Note"
 import "./App.css"
 import Header from "./components/Header"
 import NoteEditor from "./components/NoteEditor"
+import CreateNoteModal from "./components/CreateNoteModal"
+
 
 export default function App() {
   const [page, setPage] = useState("notes")
-  const [showCreateNote, setShowCreateNote] = useState(false)
+  //const [showCreateNote, setShowCreateNote] = useState(false)
+  const [showCreateModal, setShowCreateModal] = useState(false)
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
-
+  // for ai message save/load
+  const [messages, setMessages] = useState<{ 
+      role: "user" | "assistant"
+      content: string}[]>(() => {
+        const saved = localStorage.getItem("messages")
+        try{
+          if (saved) {
+            return JSON.parse(saved)
+          }
+      } catch (error){
+          console.error("Failed to load messages", error)
+        }
+        return []
+      })
+    // for user notes save/load
   const [notes, setNotes] = useState<Note[]>(() => {
-    const saved = localStorage.getItem("notes")
-    
-    if (saved) {
-      return JSON.parse(saved) 
+    try{
+      const saved = localStorage.getItem("notes")
+      if (saved) {
+        return JSON.parse(saved) 
+      }
+    } catch(error){
+      console.error("Failed to load notes", error)
     }
-
     return [
-      {
+      { /// test data for notes
         id: 1,
         title: "React Basics",
         content: "Components, Props, State",
@@ -35,14 +54,41 @@ export default function App() {
     ]
   })
 
-  /// save effect
-  useEffect(() => {
+    //// temporary response box test
+    useEffect(() => {
+      if (messages.length==0){
+      setMessages([
+      {
+        role: "assistant",
+        content: `
+      # React
 
-    localStorage.setItem(
-      "notes",
-      JSON.stringify(notes)
-    )
-  }, [notes])
+      React uses:
+
+      - Components
+      - State
+      - Props
+
+      \`\`\`js
+      const x = 1;
+      \`\`\`
+
+      > Important note
+      `
+          }
+        ])}
+      }, []) 
+
+  /// save effect for notes
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes)
+    )}, [notes])
+
+  /// save effect for messages
+  useEffect(() => {
+    localStorage.setItem("messages", JSON.stringify(messages))
+  }, [messages])
+
   /// load effect
  /* useEffect(() => {
     const saved = localStorage.getItem("notes")
@@ -64,9 +110,9 @@ export default function App() {
     <div className="app-container">
     <Header
       onAddNote={() => 
-      setShowCreateNote(!showCreateNote)
+      setShowCreateModal(true)
       }
-      showCreateNote={showCreateNote}
+     // showCreateNote={showCreateModal}
     />
 
     {selectedNote && (
@@ -79,21 +125,32 @@ export default function App() {
       />
     )}
 
+    {showCreateModal && (
+      <CreateNoteModal
+        setNotes={setNotes}
+        onClose={() => setShowCreateModal(false)}
+      />
+    )}
+
       <main className="content">
 
         {page === "notes" && (
           <NotesPage
             notes={notes}
-            setNotes={setNotes}
+           // setNotes={setNotes}
             deleteNote={deleteNote}
-            showCreateNote={showCreateNote}
-            onNoteAdded={()=>setShowCreateNote(false)}
+            //showCreateNote={showCreateNote}
+            //onNoteAdded={()=>setShowCreateNote(false)}
             setSelectedNote={setSelectedNote}
           />
         )}
 
         {page === "askai" && (
-          <AskAIPage notes={notes}/>
+          <AskAIPage notes={notes} 
+          messages={messages}
+          setMessages={setMessages}
+          
+          />
         )}
       </main>
       

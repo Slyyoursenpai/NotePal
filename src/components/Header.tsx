@@ -3,10 +3,10 @@ import {Sparkles} from "lucide-react";
 
 function Header({
     onAddNote,
-    showCreateNote
+   // showCreateNote
 }:{
     onAddNote: ()=> void
-    showCreateNote: boolean
+    //showCreateNote: boolean
 }){
     return (
         <header className="header">
@@ -15,7 +15,8 @@ function Header({
             <h1>NotePal</h1>
             </div>
             <button className="add-note-btn" onClick={onAddNote}>
-                {showCreateNote ? "✕ Cancel" : "+ Add Note"}
+                {/*{showCreateNote ? "✕ Cancel" : "+ Add Note"}*/}
+                {"+ Add Note"}
             </button>
         </header>
     )
