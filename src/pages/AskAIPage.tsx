@@ -11,7 +11,6 @@ function AskAIPage({
   notes: Note[]
 }) {
   
-  //console.log(import.meta.env.VITE_API_KEY)
 
   const [question, setQuestion] = useState("")
   const [results, setResults] = useState<Note[]>([])
