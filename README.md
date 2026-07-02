@@ -1,6 +1,8 @@
 # NotePal
 A simple Note App with Intelligence and Context Awareness through a basic RAG and LLM implementation using React, TypeScript.
 
+Latest branch build: https://note-pal-git-aichat-memory-mahirul-chowdhury-s-projects.vercel.app/
+
 # Workflow / Architecture
 
 <img width="625" height="393" alt="image" src="https://github.com/user-attachments/assets/f7290284-4bbf-45a9-9125-cab68a7769af" />
